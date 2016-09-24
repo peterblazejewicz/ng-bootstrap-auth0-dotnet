@@ -29,7 +29,18 @@
   },
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "compile": {
+      "exclude": [
+        "**/node_modules",
+        ".vscode",
+        "dist/",
+        "e2e/",
+        "src/",
+        "bin/",
+        "obj/"
+      ]
+    }
   },
   "runtimeOptions": {
     "configProperties": {
@@ -37,9 +48,18 @@
     }
   },
   "publishOptions": {
+    "exclude": [
+      "**/*.cs",
+      "bin/",
+      "obj/",
+      "e2e/",
+      "src/",
+      "angular-cli.json",
+      "*.conf.js",
+      "tslint.json"
+    ],
     "include": [
-      "dist",
-      "web.config"
+      "**/*"
     ]
   },
   "scripts": {
