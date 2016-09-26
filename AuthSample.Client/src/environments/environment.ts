@@ -3,6 +3,11 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
-export const environment = {
+import { AuthConfiguration } from '../app/auth.conf';
+
+export const environment = Object.assign({
   production: false
-};
+}, {
+  clientID: '1oy397EXD8DWvaJlhonAwRiBTgP9sXrD',
+  domain: 'blazejewicz.eu.auth0.com'
+} as AuthConfiguration);
