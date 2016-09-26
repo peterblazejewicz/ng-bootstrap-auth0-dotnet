@@ -7,11 +7,26 @@ export class AuthService {
 
   // Configure Auth0
   lock = new Auth0Lock(environment.clientID, environment.domain, {});
+  // Store profile object in auth class
+  userProfile: Object = undefined;
 
   constructor() {
+    // Set userProfile attribute of already saved profile
+    this.userProfile = JSON.parse(localStorage.getItem('profile'));
     // Add callback for lock `authenticated` event
     this.lock.on('authenticated', (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+      // Fetch profile information
+      this.lock.getProfile(authResult.idToken, (error, profile) => {
+        if (error) {
+          // Handle error
+          alert(error);
+          return;
+        }
+
+        localStorage.setItem('profile', JSON.stringify(profile));
+        this.userProfile = profile;
+      });
     });
   }
 
@@ -29,6 +44,8 @@ export class AuthService {
   public logout() {
     // Remove token from localStorage
     localStorage.removeItem('id_token');
+    localStorage.removeItem('profile');
+    this.userProfile = undefined;
   };
 
 }
