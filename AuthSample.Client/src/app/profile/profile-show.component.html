@@ -1,0 +1,24 @@
+<div *ngIf="auth.authenticated() && auth.userProfile">
+	<div class="row">
+		<div class="col-md-9">
+			<h1 class="h4">Profile</h1>
+			<img [src]="auth.userProfile.picture" alt="" class="profile-img">
+      <dl class="row">
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9">{{auth.userProfile.name}}</dd>
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">{{auth.userProfile.email}}</dd>
+        <dt class="col-sm-3">Nickname</dt>
+        <dd class="col-sm-9">{{auth.userProfile.nickname}}</dd>
+        <dt class="col-sm-3">Created At</dt>
+        <dd class="col-sm-9">{{auth.userProfile.created_at}}</dd>
+        <dt class="col-sm-3">Updated At</dt>
+        <dd class="col-sm-9">{{auth.userProfile.updated_at}}</dd>
+        <dt class="col-sm-3" *ngIf="auth.userProfile.user_metadata">Address</dt>
+        <dd class="col-sm-9" *ngIf="auth.userProfile.user_metadata">{{auth.userProfile.user_metadata.address}}</dd>
+      </dl>
+		</div>
+	</div>
+	<a class="btn btn-primary" [routerLink]="['/profile/edit']">Edit address</a>
+</div>
+<h1 class="h4" *ngIf="!auth.authenticated()">You are not logged in, please click 'Log in' button to login</h1>

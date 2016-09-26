@@ -10,10 +10,18 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { HomeComponent } from './home/home.component';
 
+// profile
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile/profile-edit.component';
+import { ProfileShowComponent } from './profile/profile-show.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent,
+    ProfileEditComponent,
+    ProfileShowComponent
   ],
   imports: [
     BrowserModule,
