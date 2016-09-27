@@ -1,4 +1,4 @@
-import { AuthConfiguration } from '../app/auth.conf';
+import { AuthConfiguration } from '../app/shared/';
 
 export const environment = Object.assign({
   production: true

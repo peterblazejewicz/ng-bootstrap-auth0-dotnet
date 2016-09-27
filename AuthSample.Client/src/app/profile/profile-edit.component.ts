@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import { AuthService } from '../auth.service';
+import { AuthService } from '../shared/';
 import { environment } from '../../environments/environment';
 
 @Component({
