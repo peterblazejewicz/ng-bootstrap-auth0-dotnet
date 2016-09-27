@@ -8,7 +8,7 @@ export class AuthService {
   // Configure Auth0
   lock = new Auth0Lock(environment.clientID, environment.domain, {});
   // Store profile object in auth class
-  userProfile: Object = undefined;
+  userProfile: any = undefined;
 
   constructor() {
     // Set userProfile attribute of already saved profile
