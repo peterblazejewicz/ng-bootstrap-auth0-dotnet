@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class AuthService {
   // Store profile object in auth class
   userProfile: any = undefined;
 
-  constructor() {
+  constructor(private router: Router) {
     // Set userProfile attribute of already saved profile
     this.userProfile = JSON.parse(localStorage.getItem('profile'));
     // Add callback for lock `authenticated` event
@@ -26,6 +27,12 @@ export class AuthService {
 
         localStorage.setItem('profile', JSON.stringify(profile));
         this.userProfile = profile;
+        // Redirect if there is a saved url to do so.
+        let redirectUrl: string = localStorage.getItem('redirect_url');
+        if (redirectUrl !== undefined) {
+          this.router.navigate([redirectUrl]);
+          localStorage.removeItem('redirect_url');
+        }
       });
     });
   }
@@ -41,11 +48,19 @@ export class AuthService {
     return tokenNotExpired();
   };
 
+  public isAdmin() {
+    return this.userProfile
+      && this.userProfile.app_metadata
+      && this.userProfile.app_metadata.roles
+      && this.userProfile.app_metadata.roles.indexOf('admin') > -1;
+  }
+
   public logout() {
     // Remove token from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');
     this.userProfile = undefined;
+    this.router.navigate(['']);
   };
 
 }
