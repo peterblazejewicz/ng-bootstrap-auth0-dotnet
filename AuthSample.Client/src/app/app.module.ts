@@ -7,7 +7,10 @@ import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
-import { routing } from './app.routing';
+import {
+  routing,
+  appRoutingProviders
+} from './app.routing';
 import { HomeComponent } from './home/home.component';
 
 // profile
@@ -16,6 +19,8 @@ import { ProfileEditComponent } from './profile/profile-edit.component';
 import { ProfileShowComponent } from './profile/profile-show.component';
 import { UnauthorizedComponent } from './unathorized/unauthorized.component';
 import { AdminComponent } from './admin/admin.component';
+
+import { AuthService } from './shared/';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,8 @@ import { AdminComponent } from './admin/admin.component';
     routing
   ],
   providers: [
+    AuthService,
+    appRoutingProviders,
     AUTH_PROVIDERS
   ],
   bootstrap: [AppComponent]
