@@ -15,7 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile/profile-edit.component';
 import { ProfileShowComponent } from './profile/profile-show.component';
 import { UnauthorizedComponent } from './unathorized/unauthorized.component';
-import { AdminComponentComponent } from './admin/admin-component/admin-component.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { AdminComponentComponent } from './admin/admin-component/admin-component
     ProfileEditComponent,
     ProfileShowComponent,
     UnauthorizedComponent,
-    AdminComponentComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule,
