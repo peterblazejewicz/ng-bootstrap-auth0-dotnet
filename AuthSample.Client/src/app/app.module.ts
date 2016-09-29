@@ -21,6 +21,7 @@ import { UnauthorizedComponent } from './unathorized/unauthorized.component';
 import { AdminComponent } from './admin/admin.component';
 
 import { AuthService } from './shared/';
+import { PingComponent } from './ping/ping.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AuthService } from './shared/';
     ProfileEditComponent,
     ProfileShowComponent,
     UnauthorizedComponent,
-    AdminComponent
+    AdminComponent,
+    PingComponent
   ],
   imports: [
     BrowserModule,
