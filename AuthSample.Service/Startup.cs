@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,27 @@ namespace AuthSample.Service
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
+            }
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.MapWhen(context =>
+            {
+                var path = context.Request.Path.Value;
+                if (path.Contains("/api/")) return false;
+                return (!path.Contains("."));
+            }, aBranch =>
+            {
+                aBranch.Use((context, next) =>
+                {
+                    context.Request.Path = new PathString("/index.html");
+                    return next();
+                });
+                aBranch.UseStaticFiles();
+            });
             app.UseMvc();
         }
     }
