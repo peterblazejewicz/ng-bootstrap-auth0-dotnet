@@ -24,6 +24,8 @@ namespace AuthSample.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add CORS support (used during development)
+            services.AddCors();
             // Add framework services.
             services.AddMvc();
         }
@@ -54,6 +56,15 @@ namespace AuthSample.Service
                 });
                 aBranch.UseStaticFiles();
             });
+            // allow CORS during development
+            if (env.IsDevelopment())
+            {
+                app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            }
             app.UseMvc();
         }
     }
