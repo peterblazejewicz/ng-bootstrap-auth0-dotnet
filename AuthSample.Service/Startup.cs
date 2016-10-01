@@ -65,6 +65,14 @@ namespace AuthSample.Service
                 .AllowAnyHeader()
                 .AllowCredentials());
             }
+            // JWT
+            var options = new JwtBearerOptions
+            {
+                Audience = Configuration["auth0:clientId"],
+                Authority = $"https://{Configuration["auth0:domain"]}/"
+            };
+            app.UseJwtBearerAuthentication(options);
+            //
             app.UseMvc();
         }
     }
