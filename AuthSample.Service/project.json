@@ -51,10 +51,12 @@
 
   "publishOptions": {
     "include": [
-      "wwwroot",
       "appsettings.json",
-      "appsettings.Production.json",
       "appsettings.Development.json",
+      "appsettings.Production.json",
+      "favicon.ico",
+      "hosting.json",
+      "index.html",
       "web.config"
     ]
   },
