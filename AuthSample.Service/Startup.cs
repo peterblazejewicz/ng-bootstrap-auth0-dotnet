@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace AuthSample.Service
 {
@@ -24,6 +25,8 @@ namespace AuthSample.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+             // Add the Auth0 Settings object so it can be injected
+            services.Configure<Auth0Settings>(Configuration.GetSection("Auth0"));
             // add CORS support (used during development)
             services.AddCors();
             // Add framework services.
@@ -31,7 +34,10 @@ namespace AuthSample.Service
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
+            ILoggerFactory loggerFactory,
+            IOptions<Auth0Settings> auth0Settings)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -68,8 +74,8 @@ namespace AuthSample.Service
             // JWT
             var options = new JwtBearerOptions
             {
-                Audience = Configuration["auth0:clientId"],
-                Authority = $"https://{Configuration["auth0:domain"]}/"
+                Audience = auth0Settings.Value.ClientId,
+                Authority = $"https://{auth0Settings.Value.Domain}/"
             };
             app.UseJwtBearerAuthentication(options);
             //
