@@ -35,5 +35,13 @@ namespace AuthSample.Service.Controllers
         {
             return "All good. You only get this message if you are authenticated.";
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        [Route("ping/admin")]
+        public string PingAdmin()
+        {
+            return "All good. Only admins will be able to see this message.";
+        }
     }
 }
