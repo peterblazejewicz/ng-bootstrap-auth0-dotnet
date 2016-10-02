@@ -62,15 +62,6 @@ namespace AuthSample.Service
                 });
                 aBranch.UseStaticFiles();
             });
-            // allow CORS during development
-            if (env.IsDevelopment())
-            {
-                app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-            }
             // JWT
             var options = new JwtBearerOptions
             {
@@ -78,6 +69,14 @@ namespace AuthSample.Service
                 Authority = $"https://{auth0Settings.Value.Domain}/"
             };
             app.UseJwtBearerAuthentication(options);
+            //
+            app.UseCors(builder =>
+            {
+                builder.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    .AllowCredentials();
+            });
             //
             app.UseMvc();
         }
