@@ -21,20 +21,32 @@ export class PingComponent {
 
   public ping() {
     this.message = '';
-    this.http.get(`${environment.apiUrl}/ping`)
-      .map(res => res.json())
+    this.http.get(`${environment.apiUrl}/api/ping`)
+      .map(res => res.text())
       .subscribe(
-      data => this.message = data.text,
+      data => {
+        this.message = data;
+      },
+      error => this.message = error.toString()
+      );
+  }
+
+  public claims() {
+    this.message = '';
+    this.http.get(`${environment.apiUrl}/api/claims`)
+      .map(res => res.text())
+      .subscribe(
+      data => this.message = data,
       error => this.message = error.toString()
       );
   }
 
   public securedPing() {
     this.message = '';
-    this.authHttp.get(`${environment.apiUrl}/secured/ping`)
-      .map(res => res.json())
+    this.authHttp.get(`${environment.apiUrl}/api/ping/secure`)
+      .map(res => res.text())
       .subscribe(
-      data => this.message = data.text,
+      data => this.message = data,
       error => this.message = error.toString()
       );
   }
