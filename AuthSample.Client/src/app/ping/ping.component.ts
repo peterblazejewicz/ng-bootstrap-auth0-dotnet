@@ -33,7 +33,7 @@ export class PingComponent {
 
   public claims() {
     this.message = '';
-    this.http.get(`${environment.apiUrl}/api/claims`)
+    this.authHttp.get(`${environment.apiUrl}/api/claims`)
       .map(res => res.text())
       .subscribe(
       data => this.message = data,
