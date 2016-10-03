@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AuthSample.Service.Controllers
 {
     [Route("api")]
+    [EnableCors("AllowNgClient")]
     public class PingController : Controller
     {
         [HttpGet]

@@ -25,10 +25,19 @@ namespace AuthSample.Service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-             // Add the Auth0 Settings object so it can be injected
+            // Add the Auth0 Settings object so it can be injected
             services.Configure<Auth0Settings>(Configuration.GetSection("Auth0"));
-            // add CORS support (used during development)
-            services.AddCors();
+            // add CORS support
+            // services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowNgClient",
+                    builder => builder
+                        .WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+            });
             // Add framework services.
             services.AddMvc();
         }
@@ -62,6 +71,11 @@ namespace AuthSample.Service
                 });
                 aBranch.UseStaticFiles();
             });
+            // Cors
+            // app.UseCors(builder =>
+            // builder.WithOrigins("http://example.com")
+            //     .AllowAnyHeader()
+            // );
             // JWT
             var options = new JwtBearerOptions
             {
@@ -69,14 +83,6 @@ namespace AuthSample.Service
                 Authority = $"https://{auth0Settings.Value.Domain}/"
             };
             app.UseJwtBearerAuthentication(options);
-            //
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowAnyOrigin()
-                    .AllowCredentials();
-            });
             //
             app.UseMvc();
         }
